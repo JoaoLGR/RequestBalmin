@@ -1,0 +1,6 @@
+@RequestBalmin_HostAddress = http://localhost:5118
+
+GET {{RequestBalmin_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
