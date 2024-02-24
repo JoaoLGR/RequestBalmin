@@ -5,25 +5,24 @@ namespace RequestBalmin.Services
 {
     public class ReadFileService
     {
-        public static string GetDataOfFile(string fileContent, string key, dynamic value)
+        public static string GetDataOfFile(string fileContent, string? key, dynamic? value)
         {
             var json = JsonSerializer.Deserialize<JsonElement>(fileContent);
 
-            if (json.ValueKind == JsonValueKind.Undefined)
+            if (key == null || value == null)
             {
-                throw new ArgumentException("O conteúdo do arquivo não é um JSON válido.", nameof(fileContent));
+                return JsonSerializer.Serialize(json);
             }
 
             JsonElement? result = FindElement(json, key, value);
 
-            if (result == null)
+            if (result != null)
             {
-                return JsonSerializer.Serialize(fileContent, new JsonSerializerOptions { WriteIndented = true }); ;
+                return JsonSerializer.Serialize(result.Value);
             }
 
-            return JsonSerializer.Serialize(result.Value, new JsonSerializerOptions { WriteIndented = true });
+            return "Não existem dados com essas especificações";
         }
-
 
         private static JsonElement? FindElement(JsonElement element, string key, dynamic value)
         {
