@@ -48,8 +48,8 @@ namespace RequestBalmin.Controllers
             return Ok("Arquivo enviado com sucesso!");
         }
 
-        [HttpGet("readFile/{fileName}/{key}/{value}")]
-        public IActionResult ReadFile(string fileName, string key, string value)
+        [HttpGet("readFile/{fileName}")]
+        public IActionResult ReadFile(string fileName, string? key, string? value)
         {
             string filePath = Path.Combine("Storage", fileName);
 
@@ -57,10 +57,26 @@ namespace RequestBalmin.Controllers
             {
                 string jsonContent = System.IO.File.ReadAllText($"{filePath}.json");
 
-                string dataFile = ReadFileService.GetDataOfFile(jsonContent, key, value);
+                try
+                {
+                    using (JsonDocument doc = JsonDocument.Parse(jsonContent))
+                    {
+                        JsonDocument.Parse(jsonContent);
 
-                return Content(dataFile, "application/json");
+                        string dataFile = ReadFileService.GetDataOfFile(jsonContent, key, value);
 
+                        if (dataFile == "Não existem dados com essas especificações")
+                        {
+                            return BadRequest("Não existem dados com essas especificações");
+                        }
+
+                        return Content(dataFile, "application/json");
+                    }
+                }
+                catch (JsonException ex)
+                {
+                    return BadRequest($"Erro no processamento do arquivo {fileName}: {ex.Message}");
+                }
             }
 
             return BadRequest("Arquivo não encontrado!");
