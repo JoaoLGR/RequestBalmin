@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RequestBalmin.Models;
 using RequestBalmin.Service;
+using RequestBalmin.Services;
 using System.Text.Json;
 
 namespace RequestBalmin.Controllers
@@ -47,26 +48,19 @@ namespace RequestBalmin.Controllers
             return Ok("Arquivo enviado com sucesso!");
         }
 
-        [HttpGet("readFile/{fileName}")]
-        public IActionResult ReadFile(string fileName, int id)
+        [HttpGet("readFile/{fileName}/{key}/{value}")]
+        public IActionResult ReadFile(string fileName, string key, string value)
         {
             string filePath = Path.Combine("Storage", fileName);
-            string extension = Path.GetExtension(filePath);
 
             if (System.IO.File.Exists($"{filePath}.json"))
             {
                 string jsonContent = System.IO.File.ReadAllText($"{filePath}.json");
 
-                var json = JsonSerializer.Deserialize<JsonElement[]>(jsonContent);
+                string dataFile = ReadFileService.GetDataOfFile(jsonContent, key, value);
 
-                var resultElement = json?.FirstOrDefault(element => element.TryGetProperty("id", out var idField) && idField.GetInt32() == id);
+                return Content(dataFile, "application/json");
 
-                if (resultElement.HasValue)
-                {
-
-                    var resultSerial = JsonSerializer.Serialize(resultElement);
-                    return Content(resultSerial, "application/json");
-                }
             }
 
             return BadRequest("Arquivo não encontrado!");
