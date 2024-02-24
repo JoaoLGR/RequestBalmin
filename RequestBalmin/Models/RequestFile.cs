@@ -2,6 +2,6 @@
 {
     public class RequestFile
     {
-        public IFormFile File { get; set; }
+        public required IFormFile File { get; set; }
     }
 }
