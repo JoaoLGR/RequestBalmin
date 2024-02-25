@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace RequestBalmin.Services
 {
-    public class ReadFileService
+    public static class ReadFileService
     {
         public static string GetDataOfFile(string fileContent, string? key, dynamic? value)
         {
