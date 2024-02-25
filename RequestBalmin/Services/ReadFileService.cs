@@ -1,4 +1,4 @@
-﻿using System.Net.Http.Json;
+﻿using Newtonsoft.Json.Linq;
 using System.Text.Json;
 
 namespace RequestBalmin.Services
@@ -22,6 +22,20 @@ namespace RequestBalmin.Services
             }
 
             return "Não existem dados com essas especificações";
+        }
+
+        public static string RemoveDataOfFile(string fileContent, string key, dynamic value)
+        {
+            var json = JsonSerializer.Deserialize<JsonElement>(fileContent);
+
+            JsonElement? result = FindElement(json, key, value);
+
+            if (fileContent.Contains(result.Value.ToString()))
+            {
+                fileContent = fileContent.Replace($"{result.Value},", "");
+            }
+
+            return fileContent;
         }
 
         private static JsonElement? FindElement(JsonElement element, string key, dynamic value)
