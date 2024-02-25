@@ -1,4 +1,3 @@
-using RequestBalmin.Service;
 
 namespace RequestBalmin
 {
@@ -11,7 +10,6 @@ namespace RequestBalmin
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddTransient<FakeDataService>();
 
             var app = builder.Build();
 
