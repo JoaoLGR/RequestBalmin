@@ -1,0 +1,49 @@
+{
+  "biblioteca": {
+    "nome": "Biblioteca Central",
+    "endereco": "Rua dos Livros, 123, Cidade Literária, País das Letras",
+    "livros": [
+      {
+        "id": 1,
+        "titulo": "A Arte da Guerra",
+        "autor": {
+          "nome": "Sun Tzu",
+          "nacionalidade": "Chinesa"
+        },
+        "categoria": "Estratégia",
+        "disponivel": true
+      },
+      {
+        "id": 2,
+        "titulo": "O Pequeno Príncipe",
+        "autor": {
+          "nome": "Antoine de Saint-Exupéry",
+          "nacionalidade": "Francesa"
+        },
+        "categoria": "Ficção",
+        "disponivel": false,
+        "emprestimos": [
+          {
+            "usuario": "João Silva",
+            "data_emprestimo": "2024-02-20",
+            "data_devolucao": "2024-03-06"
+          }
+        ]
+      }
+    ],
+    "usuarios": [
+      {
+        "id": 1,
+        "nome": "João Silva",
+        "endereco": "Rua das Flores, 456, Jardim Alegre, Cidade Feliz",
+        "telefone": "1234-5678"
+      },
+      {
+        "id": 2,
+        "nome": "Maria Oliveira",
+        "endereco": "Avenida do Progresso, 789, Bairro Novo, Nova Esperança",
+        "telefone": "8765-4321"
+      }
+    ]
+  }
+}

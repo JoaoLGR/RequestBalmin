@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RequestBalmin.Models;
-using RequestBalmin.Service;
 using RequestBalmin.Services;
 using System.Text.Json;
 
@@ -8,28 +7,8 @@ namespace RequestBalmin.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RequestBalminController(FakeDataService fakeDataService) : ControllerBase
+    public class RequestBalminController() : ControllerBase
     {
-
-        private readonly FakeDataService _fakeDataService = fakeDataService;
-
-        [HttpGet("dataFake")]
-        public IActionResult GetDataFake()
-        {
-            var fakeName = _fakeDataService.GenerateFakeName();
-            var fakeEmail = _fakeDataService.GenerateFakeEmail();
-            var fakeUserName = _fakeDataService.GenerateFakeName();
-
-            var fakeData = new
-            {
-                Name = fakeName,
-                UserName = fakeUserName,
-                Email = fakeEmail
-            };
-
-            return Ok(fakeData);
-        }
-
         [HttpPost("receiveData")]
         public IActionResult ReceiveData([FromBody] JsonElement requestData)
         {

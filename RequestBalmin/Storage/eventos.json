@@ -1,0 +1,78 @@
+{
+  "centroDeConvencoes": {
+    "nome": "Centro de Eventos do Futuro",
+    "endereco": "Avenida das Inovações, 5000, Tecnópolis",
+    "salas": [
+      {
+        "id": 1,
+        "nome": "Sala Solar",
+        "capacidade": 200,
+        "disponibilidade": [
+          {
+            "data": "2024-03-15",
+            "horarios": ["08:00-10:00", "14:00-16:00"]
+          },
+          {
+            "data": "2024-03-16",
+            "horarios": ["09:00-11:00", "15:00-17:00"]
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "nome": "Sala Lunar",
+        "capacidade": 100,
+        "disponibilidade": [
+          {
+            "data": "2024-03-15",
+            "horarios": ["10:00-12:00", "16:00-18:00"]
+          },
+          {
+            "data": "2024-03-16",
+            "horarios": ["10:00-12:00", "16:00-18:00"]
+          }
+        ]
+      }
+    ],
+    "eventos": [
+      {
+        "id": 1,
+        "nome": "Conferência de Inovação Tecnológica",
+        "descricao": "Uma jornada pelos avanços tecnológicos que moldarão o futuro.",
+        "data": "2024-03-15",
+        "sala": 1,
+        "participantes": [
+          {
+            "nome": "Dr. Inventor",
+            "email": "inventor@example.com",
+            "tipo": "Palestrante"
+          },
+          {
+            "nome": "Eng. Criativo",
+            "email": "criativo@example.com",
+            "tipo": "Participante"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "nome": "Workshop de Sustentabilidade",
+        "descricao": "Explorando práticas sustentáveis para um mundo melhor.",
+        "data": "2024-03-16",
+        "sala": 2,
+        "participantes": [
+          {
+            "nome": "Eco Guerreiro",
+            "email": "eco@example.com",
+            "tipo": "Palestrante"
+          },
+          {
+            "nome": "Verde Esperança",
+            "email": "esperanca@example.com",
+            "tipo": "Participante"
+          }
+        ]
+      }
+    ]
+  }
+}
