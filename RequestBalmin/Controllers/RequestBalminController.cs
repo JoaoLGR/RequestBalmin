@@ -27,7 +27,7 @@ namespace RequestBalmin.Controllers
             return Ok("Arquivo enviado com sucesso!");
         }
 
-        [HttpGet("readFile/{fileName}")]
+        [HttpGet("readFile/{fileName}/{key?}/{value?}")]
         public IActionResult ReadFile(string fileName, string? key, string? value)
         {
             string filePath = Path.Combine("Storage", fileName);
