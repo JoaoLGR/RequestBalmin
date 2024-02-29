@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using RequestBalmin.Models;
 using RequestBalmin.Services;
 using System.Text.Json;
@@ -38,7 +40,7 @@ namespace RequestBalmin.Controllers
 
                 try
                 {
-                    JsonDocument.Parse(jsonContent);
+                    JToken.Parse(jsonContent);
 
                     string dataFile = ReadFileService.GetDataOfFile(jsonContent, key, value);
 
@@ -49,7 +51,7 @@ namespace RequestBalmin.Controllers
 
                     return Content(dataFile, "application/json");
                 }
-                catch (JsonException ex)
+                catch (JsonReaderException ex)
                 {
                     return BadRequest($"Erro no processamento do arquivo {fileName}: {ex.Message}");
                 }
