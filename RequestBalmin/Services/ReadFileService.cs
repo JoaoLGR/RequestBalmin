@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Text.Json;
 
 namespace RequestBalmin.Services
@@ -7,26 +8,60 @@ namespace RequestBalmin.Services
     {
         public static string GetDataOfFile(string fileContent, string? key, dynamic? value)
         {
-            var json = JsonSerializer.Deserialize<JsonElement>(fileContent);
+            var json = JToken.Parse(fileContent);
 
             if (key == null || value == null)
             {
-                return JsonSerializer.Serialize(json);
+                return json.ToString(Formatting.Indented);
             }
 
-            JsonElement? result = FindElement(json, key, value);
+            JToken? result = FindJsonElement(json, key, value);
 
             if (result != null)
             {
-                return JsonSerializer.Serialize(result.Value);
+                return result.ToString(Formatting.Indented);
             }
 
             return "Não existem dados com essas especificações";
         }
 
+        private static JToken? FindJsonElement(JToken token, string key, dynamic value)
+        {
+            if (token.Type == JTokenType.Object)
+            {
+                var obj = (JObject)token;
+                if (obj.ContainsKey(key) && obj[key]?.ToString() == value.ToString())
+                {
+                    return obj;
+                }
+
+                foreach (var property in obj.Properties())
+                {
+                    JToken? foundToken = FindJsonElement(property.Value, key, value);
+                    if (foundToken != null)
+                    {
+                        return foundToken;
+                    }
+                }
+            }
+            else if (token.Type == JTokenType.Array)
+            {
+                foreach (var item in token)
+                {
+                    JToken? foundToken = FindJsonElement(item, key, value);
+                    if (foundToken != null)
+                    {
+                        return foundToken;
+                    }
+                }
+            }
+
+            return null;
+        }
+
         public static string RemoveDataOfFile(string fileContent, string key, dynamic value)
         {
-            var json = JsonSerializer.Deserialize<JsonElement>(fileContent);
+            var json = System.Text.Json.JsonSerializer.Deserialize<JsonElement>(fileContent);
 
             JsonElement? result = FindElement(json, key, value);
 
