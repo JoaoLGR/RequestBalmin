@@ -12,17 +12,38 @@ namespace RequestBalmin.Services
 
             if (key == null || value == null)
             {
-                return json.ToString(Formatting.Indented);
+                return json.ToString();
             }
 
             JToken? result = FindJsonElement(json, key, value);
 
             if (result != null)
             {
-                return result.ToString(Formatting.Indented);
+                return result.ToString();
             }
 
             return "Não existem dados com essas especificações";
+        }
+
+        public static string RemoveDataOfFile(string fileContent, string key, dynamic value)
+        {
+            var json = JToken.Parse(fileContent);
+
+            JToken? elementToRemove = FindJsonElement(json, key, value);
+
+            if (elementToRemove != null)
+            {
+                if (elementToRemove.Parent is JProperty property)
+                {
+                    property.Remove();
+                }
+                else if (elementToRemove.Parent is JArray)
+                {
+                    elementToRemove.Remove();
+                }
+            }
+
+            return json.ToString();
         }
 
         private static JToken? FindJsonElement(JToken token, string key, dynamic value)
@@ -57,20 +78,6 @@ namespace RequestBalmin.Services
             }
 
             return null;
-        }
-
-        public static string RemoveDataOfFile(string fileContent, string key, dynamic value)
-        {
-            var json = System.Text.Json.JsonSerializer.Deserialize<JsonElement>(fileContent);
-
-            JsonElement? result = FindElement(json, key, value);
-
-            if (fileContent.Contains(result.Value.ToString()))
-            {
-                fileContent = fileContent.Replace($"{result.Value},", "");
-            }
-
-            return fileContent;
         }
 
         private static JsonElement? FindElement(JsonElement element, string key, dynamic value)
